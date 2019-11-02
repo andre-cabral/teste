@@ -7,7 +7,7 @@ body {
 /*ALL CONTENT CONTAINER*/
 .container {
     display: flex;
-    min-height: 100vh;
+    height: 100vh;
 }
 
 /*MENU*/
@@ -15,6 +15,7 @@ body {
     text-align: center;
     background-color:#0e1823;
     flex-grow: 3;
+    flex-basis: 225px;
 }
 .menu__logo {
     display:inline-block;
@@ -27,7 +28,8 @@ body {
 
 /*SEARCH AND MAIN CONTENT CONTAINER*/
 .content{
-    flex-grow: 7;
+    flex-grow: 12;
+    flex-basis: 1000px;
     display: flex;
     flex-direction: column;
 }
@@ -37,7 +39,7 @@ body {
     display: flex;
     justify-content: space-around;
     box-sizing: border-box;
-    height: 100px;
+    min-height: 100px;
     padding: 25px 40px 0 60px;
     background-color: #1a2433;
 }
@@ -67,7 +69,7 @@ body {
 
 /*MAIN CONTENT*/
 .content__main{
-    flex-grow: 1;
+    overflow: auto;
     background-position: right;
     background-size: contain;
     background-image: url('../img/car-wireframe-transparent.png');
@@ -77,8 +79,13 @@ body {
 .banner {
     font-family: 'Lobster Two', cursive;
     font-size: 100px;
+    line-height: 130px;
     text-align: center;
     padding-top: 50px;
+}
+.banner__text{
+    text-align: right;
+    display: inline-block;
 }
 .banner__name{
     text-align: right;

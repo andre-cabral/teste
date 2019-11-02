@@ -1,0 +1,11 @@
+/*RESULT LIST*/
+.result{
+
+}
+.result__list{
+    padding: 40px 60px;
+}
+.result__card{
+    padding: 30px;
+    border-bottom: 1px solid #4d5866;
+}

@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import Menu from '../Menu';
-import Search from '../Search';
-import Banner from '../Banner';
-import '../../assets/styles/reset.css';
+import Content from '../Content';
+import '../../assets/styles/Reset.css';
 import '../../assets/styles/Shared.css';
 
 export default class App extends Component {
@@ -10,12 +9,7 @@ export default class App extends Component {
         return (
             <div className="container">
                 <Menu />
-                <div className="content">
-                    <Search />
-                    <div className="content__main">
-                        <Banner />
-                    </div>
-                </div>
+                <Content />
             </div>
         );
     }

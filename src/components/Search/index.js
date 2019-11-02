@@ -1,35 +1,19 @@
 import React, {Component} from 'react';
 
 export default class Search extends Component {
-    constructor(props) {
-        super(props);
-        
-        this.state = {
-            queryValue: ''
-        };
-
-        this.inputOnChange = this.inputOnChange.bind(this);
-    }
-
-    inputOnChange(e) {
-        this.setState({
-            queryValue: e.target.value
-        });
-    }
-
     render() {
-        const inputOnChange = this.inputOnChange;
         const { 
             inputId = 'input-search',
             inputClass = 'search__input',
             inputPlaceholder = '',
+            inputOnChange = () => {},
                         
             buttonOnClick = () => {},
             buttonClass = 'search__button',
             buttonType = 'submit',
             buttonText = 'Cadastrar',
 
-            querySubmit = (e) => {e.preventDefault();}
+            querySubmit = (e) => {e.preventDefault();this.fetchQuery();}
         } = this.props;
 
         return (
