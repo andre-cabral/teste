@@ -1,19 +1,87 @@
 body {
-    background-color:#1f2d40;
+    background-color:#1f2d40; 
     color:#f5f5f5;
     font-family: 'Roboto', sans-serif;
 }
-.menu {
-    background-color:#0e1823;
+
+/*ALL CONTENT CONTAINER*/
+.container {
+    display: flex;
+    min-height: 100vh;
 }
-.menu h1 {
+
+/*MENU*/
+.menu {
+    text-align: center;
+    background-color:#0e1823;
+    flex-grow: 3;
+}
+.menu__logo {
     display:inline-block;
     background: url('../img/logo-tc.png') no-repeat;
+    margin-top: 80px;
     width:80px;
     height:80px;
     text-indent:-999em;
 }
+
+/*SEARCH AND MAIN CONTENT CONTAINER*/
+.content{
+    flex-grow: 7;
+    display: flex;
+    flex-direction: column;
+}
+
+/*SEARCH*/
+.search{
+    display: flex;
+    justify-content: space-around;
+    box-sizing: border-box;
+    height: 100px;
+    padding: 25px 40px 0 60px;
+    background-color: #1a2433;
+}
+.search__input{
+    flex-grow: 15;
+    box-sizing: border-box;
+    height: 45px;
+    padding: 0 10px;
+    background-color: #1a2433;
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    color: #aaa;
+    border: 1px solid #aaa;
+    border-radius: 3px;
+}
+.search__button{
+    flex-grow: 1;
+    height: 45px;
+    margin-left: 20px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 22px;
+    border-radius: 3px;
+    background-color: #fff;
+    color: #000;
+}
+
+/*MAIN CONTENT*/
+.content__main{
+    flex-grow: 1;
+    background-position: right;
+    background-size: contain;
+    background-image: url('../img/car-wireframe-transparent.png');
+    background-repeat: no-repeat;
+}
+
 .banner {
     font-family: 'Lobster Two', cursive;
     font-size: 100px;
+    text-align: center;
+    padding-top: 50px;
+}
+.banner__name{
+    text-align: right;
+    display: inline-block;
+    background-color: rgba(37, 64, 100, 0.7);
 }
