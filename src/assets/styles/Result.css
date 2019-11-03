@@ -5,7 +5,40 @@
 .result__list{
     padding: 40px 60px;
 }
+
+/*RESULT CARD*/
 .result__card{
+    display: flex;
+    flex-wrap: wrap;
     padding: 30px;
     border-bottom: 1px solid #4d5866;
+}
+.result__card:hover{
+    background: rgba(255, 255,255, 0.1);
+}
+.result__title{
+    width: 80%;
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+}
+.result__price{
+    width: 20%;
+    text-align: right;
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+}
+.result__details{
+    width: 80%;
+    margin-top: 5px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+}
+.result__year{
+    width: 20%;
+    margin-top: 5px;
+    text-align: right;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
 }

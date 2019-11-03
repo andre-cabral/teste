@@ -14,13 +14,13 @@ export default class ResultCard extends Component {
         return (
             <li className="result__card">
                 <h3 className="result__title">{title}</h3>
-                <p className="result__price">{price}</p>
+                <p className="result__price">R$ {price}</p>
                 <p className="result__details">
                     <span className="result__model">{model}</span>
                     &nbsp;&middot;&nbsp;
                     <span className="result__brand">{brand}</span>
                     &nbsp;&middot;&nbsp;
-                    <span className="result__km">{km}</span>
+                    <span className="result__km">{km} KM</span>
                 </p>
                 <p className="result__year">{year}</p>
             </li>
