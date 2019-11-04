@@ -1,0 +1,76 @@
+.edit{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	box-sizing: border-box;
+	padding: 40px 60px;
+}
+.edit__message{
+    font-family: 'Roboto', sans-serif;
+	font-size: 16px;
+	font-weight: bold;
+    text-align: left;
+	width: 100%;
+	min-height: 16px;
+}
+.edit__form{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	padding: 0 15px;
+}
+.edit__input{
+	width: 100%;
+	box-sizing: border-box;
+	height: 45px;
+	margin-top: 50px;
+	padding: 0 10px;
+	font-family: 'Roboto', sans-serif;
+	font-size: 20px;
+	font-weight: bold;
+	color: #fff;
+	background-color: transparent;
+	border-top: none;
+	border-left: none;
+	border-bottom: 1px solid #aaa;
+	border-right: none;
+}
+.edit__input--first{
+	margin-top: 30px;
+}
+.edit__input--half{
+  	width: 49%;
+}
+.edit__input--last{
+ 	 margin-right: 49%;
+}
+.edit__button-container{
+	width: 100%;
+	display: flex;
+}
+.edit__button{
+	min-width: 10%;
+	height: 45px;
+	margin-top: 50px;
+	margin-left: 10px;
+	font-family: 'Roboto', sans-serif;
+	font-size: 22px;
+	border-radius: 3px;
+	background-color: #fff;
+	color: #000;
+	cursor: pointer;
+}
+.edit__button:disabled{
+  	opacity: 0.3;
+}
+.edit__button--transparent{
+	background-color: transparent;
+	color: #fff;
+	border: 1px solid #fff;
+}
+.edit__button--first{
+  	margin-left: 0;
+}
+.edit__button--last{
+  	margin-left: auto;
+}

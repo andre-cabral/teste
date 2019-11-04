@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Search from '../Search';
 import Banner from '../Banner';
 import ResultList from '../ResultList';
+import Edit from '../Edit';
 import Loading from '../Loading';
 
 export default class Content extends Component {
@@ -37,11 +38,13 @@ export default class Content extends Component {
 	renderMainContentComponent(props){
 		switch(this.state.mainContentComponent){
 			case 'Banner':
-				return <Banner {...props} setIsLoading={this.setIsLoading} setMainContentComponent={this.setMainContentComponent}  />
+				return <Banner {...props} setIsLoading={this.setIsLoading} setMainContentComponent={this.setMainContentComponent}  />;
 			case 'ResultList':
-				return <ResultList {...props} setIsLoading={this.setIsLoading} setMainContentComponent={this.setMainContentComponent}  />
+				return <ResultList {...props} setIsLoading={this.setIsLoading} setMainContentComponent={this.setMainContentComponent}  />;
+			case 'Edit':
+				return <Edit {...props} setIsLoading={this.setIsLoading} setMainContentComponent={this.setMainContentComponent}  />;
 			default:
-				return <Banner {...props} setIsLoading={this.setIsLoading} setMainContentComponent={this.setMainContentComponent} />
+				return <Banner {...props} setIsLoading={this.setIsLoading} setMainContentComponent={this.setMainContentComponent} />;
 		}
 	}
 

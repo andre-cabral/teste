@@ -27,7 +27,7 @@ export default class Search extends Component {
     }
 
     fetchQuery() {
-		const that = this;   
+		const that = this; 
         that.props.setIsLoading(true);
 
         fetch(`https://private-anon-74a3b17c93-tradersclubapi.apiary-mock.com/api/cars?search=${this.state.queryValue}`)
@@ -41,7 +41,7 @@ export default class Search extends Component {
 			that.props.setMainContentComponent('Error', that.state);
           } else {
             // API response ok        
-            response.json().then(function(json) {
+            response.json().then( (json) => {
 				if(typeof json.cars !== 'undefined'){
 					that.setQueryResults(json.cars);
 				} else {
@@ -62,23 +62,15 @@ export default class Search extends Component {
     
     render() {
         const 
-            inputId = 'input-search',
-			inputClass = 'search__input',
-			inputPlaceholder = '',
 			inputOnChange = this.inputOnChange,
-					
 			buttonOnClick = () => {},
-			buttonClass = 'search__button',
-			buttonType = 'submit',
-			buttonText = 'Cadastrar',
-
 			querySubmit = (e) => {e.preventDefault();this.fetchQuery();}
 		;
 
         return (
             <form className="search" onSubmit={querySubmit}>
-                <input className={inputClass} id={inputId} type="text" placeholder={inputPlaceholder} onChange={inputOnChange} />
-                <button className={buttonClass} onClick={buttonOnClick} type={buttonType}>{buttonText}</button>
+                <input className="search__input" id="input__search" type="text" placeholder="" onChange={inputOnChange} />
+                <button className="search__button" onClick={buttonOnClick} type="submit">Cadastrar</button>
             </form>
         );
     }

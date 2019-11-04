@@ -12,7 +12,7 @@ export default class ResultList extends Component {
                 { queryResults.length > 0 && 
                     <ul className="result__list">
                         {queryResults.map((item => {
-                            return (<ResultCard key={item.id} {...item} />);
+                            return (<ResultCard key={item.id} {...item} setMainContentComponent={this.props.setMainContentComponent} />);
                         }))}
                     </ul>
                 }
