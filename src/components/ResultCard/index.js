@@ -3,12 +3,14 @@ import React, {Component} from 'react';
 export default class ResultCard extends Component {
     render() {
         const {
+            id = '',
             title = '',
-            price = '',
             model = '',
             brand = '',
+            year = '',
+            color = '',
             km = '',
-            year = ''
+            price = ''
         } = this.props;
 
         return (

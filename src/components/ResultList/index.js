@@ -8,7 +8,7 @@ export default class ResultList extends Component {
             queryResults = []
         } = this.props;
         return (
-            <div className="result">
+            <section className="result">
                 { queryResults.length > 0 && 
                     <ul className="result__list">
                         {queryResults.map((item => {
@@ -19,7 +19,7 @@ export default class ResultList extends Component {
                 { queryResults.length === 0 && 
                     <h3 className="result__empty">Nenhum resultado foi encontrado.</h3>
                 }
-            </div>
+            </section>
         );
     }
 }

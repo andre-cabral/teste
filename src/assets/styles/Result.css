@@ -1,7 +1,4 @@
 /*RESULT LIST*/
-.result{
-
-}
 .result__list{
     padding: 40px 60px;
 }
@@ -12,6 +9,7 @@
     flex-wrap: wrap;
     padding: 30px;
     border-bottom: 1px solid #4d5866;
+    cursor: pointer;
 }
 .result__card:hover{
     background: rgba(255, 255,255, 0.1);

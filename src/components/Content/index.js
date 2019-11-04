@@ -11,96 +11,50 @@ export default class Content extends Component {
         this.state = {
 			queryValue: '',
 			queryResults: [],
-			hasSearched: false,
 			isLoading: false,
+			mainContentComponent: 'Banner',
+			mainContentProps: {}
         };
 
-        this.inputOnChange = this.inputOnChange.bind(this);
         this.setIsLoading = this.setIsLoading.bind(this);
-		this.fetchQuery = this.fetchQuery.bind(this);
-		this.setQueryResults = this.setQueryResults.bind(this);
-    }
-
-    inputOnChange(e) {
-        this.setState({
-            queryValue: e.target.value
-        });
+		this.setMainContentComponent = this.setMainContentComponent.bind(this);
+		this.renderMainContentComponent = this.renderMainContentComponent.bind(this);
     }
 
     setIsLoading(value = true){
         this.setState({
-			isLoading: value,
-			hasSearched: true
+			isLoading: value
         });
 	}
-	
-	setQueryResults(value = []){
+
+	setMainContentComponent(value = 'Banner', props = {}){
         this.setState({
-            queryResults: value
-		});
-		
-		console.log(this.state)
-    }
-
-    fetchQuery() {
-		const that = this;   
-        that.setIsLoading(true);
-
-        fetch(`https://private-anon-74a3b17c93-tradersclubapi.apiary-mock.com/api/cars?search=${this.state.queryValue}`)
-        .then(response => {
-          
-          if (response.status === 404) {
-            // Error on API
-			console.log('404');
-			that.setQueryResults([]);
-            that.setIsLoading(false);
-          } else {
-            // API response ok        
-            response.json().then(function(json) {
-				if(typeof json.cars !== 'undefined'){
-					that.setQueryResults(json.cars);
-				} else {
-					that.setQueryResults([]);
-				}
-            });
-    
-            that.setIsLoading(false);
-          }
-        })
-        .catch(() => {
-          // request error
-          console.log('error');
-          that.setIsLoading(false);
+			mainContentComponent: value,
+			mainContentProps: props
         });
-      }
+	}
+
+	renderMainContentComponent(props){
+		switch(this.state.mainContentComponent){
+			case 'Banner':
+				return <Banner {...props} setIsLoading={this.setIsLoading} setMainContentComponent={this.setMainContentComponent}  />
+			case 'ResultList':
+				return <ResultList {...props} setIsLoading={this.setIsLoading} setMainContentComponent={this.setMainContentComponent}  />
+			default:
+				return <Banner {...props} setIsLoading={this.setIsLoading} setMainContentComponent={this.setMainContentComponent} />
+		}
+	}
 
     render() {
-		const searchProps = {
-			inputId: 'input-search',
-			inputClass: 'search__input',
-			inputPlaceholder: '',
-			inputOnChange: this.inputOnChange,
-					
-			buttonOnClick: () => {},
-			buttonClass: 'search__button',
-			buttonType: 'submit',
-			buttonText: 'Cadastrar',
-
-			querySubmit: (e) => {e.preventDefault();this.fetchQuery();}
-		};
-
         return (
 			<div className="content">
-				<Search {...searchProps} />
+				<Search setIsLoading={this.setIsLoading} setMainContentComponent={this.setMainContentComponent} />
 				<div className="content__main">
 					{this.state.isLoading &&
 						<Loading />
 					}
-					{!this.state.isLoading && !this.state.hasSearched &&
-						<Banner />
-					}
-					{!this.state.isLoading && this.state.hasSearched &&
-						<ResultList queryResults={this.state.queryResults} />
+					{!this.state.isLoading && 
+						this.renderMainContentComponent(this.state.mainContentProps)
 					}
 				</div>
 			</div>
