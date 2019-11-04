@@ -43,6 +43,8 @@ export default class Content extends Component {
 				return <ResultList {...props} setIsLoading={this.setIsLoading} setMainContentComponent={this.setMainContentComponent}  />;
 			case 'Edit':
 				return <Edit {...props} setIsLoading={this.setIsLoading} setMainContentComponent={this.setMainContentComponent}  />;
+			case 'New':
+				return <Edit {...props} isNew={true} setIsLoading={this.setIsLoading} setMainContentComponent={this.setMainContentComponent}  />;
 			default:
 				return <Banner {...props} setIsLoading={this.setIsLoading} setMainContentComponent={this.setMainContentComponent} />;
 		}
@@ -51,7 +53,7 @@ export default class Content extends Component {
     render() {
         return (
 			<div className="content">
-				<Search setIsLoading={this.setIsLoading} setMainContentComponent={this.setMainContentComponent} />
+				<Search setIsLoading={this.setIsLoading} mainContentComponent={this.state.mainContentComponent} setMainContentComponent={this.setMainContentComponent} />
 				<div className="content__main">
 					{this.state.isLoading &&
 						<Loading />

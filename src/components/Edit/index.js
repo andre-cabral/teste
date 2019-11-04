@@ -59,10 +59,11 @@ export default class Edit extends Component {
             year = '',
             color = '',
             km = '',
-            price = '' 
+            price = '',
+            message = ' '
         } = this.props;
 
-        this.setState({ id, title, model, brand, year, color, km, price });
+        this.setState({ id, title, model, brand, year, color, km, price, message });
 
         this.fetchBrandsList();
     }
@@ -210,6 +211,7 @@ export default class Edit extends Component {
                 if (this._isMounted) {
                     that.setMessage('Formulário salvo com sucesso.');
                     that.setLoadingEdit(false);
+                    that.props.setMainContentComponent('Edit', this.props);
                 }
             }
         })
@@ -218,6 +220,66 @@ export default class Edit extends Component {
             console.log('error');
             if (this._isMounted) {
                 that.setMessage('Problemas ao salvar o formulário.');
+                that.setLoadingEdit(false);
+            }
+            //that.props.setMainContentComponent('Error', that.state);
+        });;
+    }
+
+    fetchNew(){
+        const that = this;
+        that.setLoadingEdit(true);
+
+        const data = { 
+            car: {
+                'id': this.state.id,
+                'title': this.state.title,
+                'model': this.state.model,
+                'brand': this.state.brand,
+                'year': this.state.year,
+                'color': this.state.color,
+                'km': this.state.km,
+                'price': this.state.price
+            }
+        };
+        fetch(
+            `https://private-anon-74a3b17c93-tradersclubapi.apiary-mock.com/api/cars`, 
+            {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            }
+        )
+        .then(response => {
+            if (response.status === 404) {
+                // Error on API
+                console.log('404');
+                if (this._isMounted) {
+                    that.setMessage('Problemas ao criar o formulário.');
+                    that.setLoadingEdit(false);
+                }
+                //that.props.setMainContentComponent('Error', that.state);
+            } else {
+                // API response ok
+                if (this._isMounted) {
+                    response.json().then( (json) => {
+                        if(typeof json.car !== 'undefined'){
+                            that.setState({...json.car});
+                            that.setMessage('Formulário criado com sucesso.');
+                            that.setLoadingEdit(false);
+                        } else {
+                            that.setMessage('Problemas ao criar o formulário.');
+                            that.setLoadingEdit(false);
+                        }
+                    });
+                }
+            }
+        })
+        .catch(() => {
+            // request error
+            console.log('error');
+            if (this._isMounted) {
+                that.setMessage('Problemas ao criar o formulário.');
                 that.setLoadingEdit(false);
             }
             //that.props.setMainContentComponent('Error', that.state);
@@ -289,10 +351,20 @@ export default class Edit extends Component {
             message = ' '
         } = this.state;
 
+        const {
+            isNew = false
+        } = this.props;
+
         const 
             removeOnClick = () => {this.fetchRemove();},
             cancelOnClick = () => {this.props.setMainContentComponent('Banner', {});},
-            saveOnClick = () => {this.fetchEdit();},
+            saveOnClick = () => {
+                if(!isNew){
+                    this.fetchEdit();
+                } else {
+                    this.fetchNew();
+                }
+            },
             editSubmit = (e) => {e.preventDefault();}
         ;
 
@@ -320,8 +392,10 @@ export default class Edit extends Component {
                         <input className="edit__input edit__input--last edit__input--half" id="edit__km" type="number" placeholder="" defaultValue={km} onChange={this.inputKmOnChange} />
                         
                         <div className="edit__button-container">
-                            <button className="edit__button edit__button--first edit__button--transparent" disabled={this.state.loadingEdit} onClick={removeOnClick} type="submit">Remover</button>
-                            <button className="edit__button edit__button--transparent" disabled={this.state.loadingEdit} onClick={cancelOnClick} type="submit">Cancelar</button>
+                            { !isNew && 
+                                <button className="edit__button edit__button--first edit__button--transparent" disabled={this.state.loadingEdit} onClick={removeOnClick} type="submit">Remover</button>
+                            }
+                            <button className={`edit__button edit__button--transparent${isNew ? ' edit__button--first' : ''}`} disabled={this.state.loadingEdit} onClick={cancelOnClick} type="submit">Cancelar</button>
                             {this.state.loadingEdit && <Loading small={true} />}
                             <button className="edit__button edit__button--last" disabled={this.state.loadingEdit} onClick={saveOnClick} type="submit">Salvar</button>
                         </div>

@@ -65,6 +65,7 @@ body {
     border-radius: 3px;
     background-color: #fff;
     color: #000;
+    cursor: pointer;
 }
 
 /*MAIN CONTENT*/

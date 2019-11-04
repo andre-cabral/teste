@@ -11,13 +11,31 @@ export default class Search extends Component {
 
         this.inputOnChange = this.inputOnChange.bind(this);
 		this.fetchQuery = this.fetchQuery.bind(this);
-		this.setQueryResults = this.setQueryResults.bind(this);
+        this.setQueryResults = this.setQueryResults.bind(this);
     }
 
     inputOnChange(e) {
-        this.setState({
-            queryValue: e.target.value
-        });
+        /* PREVENTS THE USER FROM ACCIDENTALLY GETTING OUT OF THE
+        EDIT OR NEW SCREEN IF HE TYPES SOMETHING ON THE SEARCH BAR */
+        if(this.props.mainContentComponent !== 'New' && this.props.mainContentComponent !== 'Edit'){
+            /* CLEAR THE DELAY TO FETCH */
+            if(typeof this.timerID !== 'undefined'){
+                clearTimeout(this.timerID);
+            }
+    
+            this.props.setIsLoading(true);
+            this.setState({
+                queryValue: e.target.value
+            });
+    
+            /* CREATE A DELAY TO ONLY FETCH THE API 
+            WHEN THE USER STOPS TYPING FOR A SMALL TIME */
+            this.timerID = setTimeout(
+                () => {this.fetchQuery();},
+                400
+            );
+        }
+        
     }
 	
 	setQueryResults(value = []){
@@ -63,8 +81,8 @@ export default class Search extends Component {
     render() {
         const 
 			inputOnChange = this.inputOnChange,
-			buttonOnClick = () => {},
-			querySubmit = (e) => {e.preventDefault();this.fetchQuery();}
+			buttonOnClick = () => {this.props.setMainContentComponent('New', {title: this.state.queryValue});},
+			querySubmit = (e) => {e.preventDefault();}
 		;
 
         return (
