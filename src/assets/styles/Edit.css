@@ -48,8 +48,26 @@
 	width: 100%;
 	display: flex;
 }
+.edit__select{
+	width: 100%;
+	box-sizing: border-box;
+	height: 45px;
+	margin-top: 50px;
+	padding: 0 10px;
+	font-family: 'Roboto', sans-serif;
+	font-size: 20px;
+	font-weight: bold;
+	color: #fff;
+	background-color: transparent;
+    border: 1px solid #aaa;
+	border-radius: 3px;
+	cursor: pointer;
+}
+.edit__option{
+	color: #000;
+}
 .edit__button{
-	min-width: 10%;
+	min-width: 13%;
 	height: 45px;
 	margin-top: 50px;
 	margin-left: 10px;

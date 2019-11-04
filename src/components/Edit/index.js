@@ -3,6 +3,8 @@ import Loading from '../Loading';
 import '../../assets/styles/Edit.css';
 
 export default class Edit extends Component {
+    _isMounted = false;
+
     constructor(props) {
         super(props);
         
@@ -47,6 +49,8 @@ export default class Edit extends Component {
     }
 
     componentDidMount() {
+        this._isMounted = true;
+
         const {
             id = '',
             title = '',
@@ -61,6 +65,10 @@ export default class Edit extends Component {
         this.setState({ id, title, model, brand, year, color, km, price });
 
         this.fetchBrandsList();
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 
     setLoadingBrands(value = false){
@@ -83,30 +91,36 @@ export default class Edit extends Component {
           
           if (response.status === 404) {
             // Error on API
-			console.log('404');
-            that.setMessage('Problemas ao carregar a lista de marcas.');
-			that.setLoadingBrands(false);
+            console.log('404');
+            if (this._isMounted) {
+                that.setMessage('Problemas ao carregar a lista de marcas.');
+                that.setLoadingBrands(false);
+            }
 			//that.props.setMainContentComponent('Error', that.state);
           } else {
             // API response ok        
             response.json().then( (json) => {
-				if(typeof json.brands !== 'undefined'){
-					that.setBrandsList(json.brands);
-				} else {
-					that.setBrandsList([]);
+                if (this._isMounted) {
+                    if(typeof json.brands !== 'undefined'){
+                        that.setBrandsList(json.brands);
+                    } else {
+                        that.setBrandsList([]);
+                    }
+                    that.setMessage(' ');
+                    that.setLoadingBrands(false);
                 }
-                that.setMessage(' ');
-                that.setLoadingBrands(false);;
                 //that.props.setMainContentComponent('ResultList', that.state);
             });
           }
         })
         .catch(() => {
-          // request error
-          console.log('error');
-          that.setMessage('Problemas ao carregar a lista de marcas.');
-		  that.setLoadingBrands(false);
-		  //that.props.setMainContentComponent('Error', that.state);
+            // request error
+            console.log('error');
+            if (this._isMounted) {
+                that.setMessage('Problemas ao carregar a lista de marcas.');
+                that.setLoadingBrands(false);
+            }
+            //that.props.setMainContentComponent('Error', that.state);
         });
     }
 
@@ -186,20 +200,26 @@ export default class Edit extends Component {
             if (response.status === 404) {
                 // Error on API
                 console.log('404');
-                that.setMessage('Problemas ao salvar o formulário.');
-                that.setLoadingEdit(false);
+                if (this._isMounted) {
+                    that.setMessage('Problemas ao salvar o formulário.');
+                    that.setLoadingEdit(false);
+                }
                 //that.props.setMainContentComponent('Error', that.state);
             } else {
                 // API response ok
-                that.setMessage('Formulário salvo com sucesso.');
-                that.setLoadingEdit(false);
+                if (this._isMounted) {
+                    that.setMessage('Formulário salvo com sucesso.');
+                    that.setLoadingEdit(false);
+                }
             }
         })
         .catch(() => {
             // request error
             console.log('error');
-            that.setMessage('Problemas ao salvar o formulário.');
-            that.setLoadingEdit(false);
+            if (this._isMounted) {
+                that.setMessage('Problemas ao salvar o formulário.');
+                that.setLoadingEdit(false);
+            }
             //that.props.setMainContentComponent('Error', that.state);
         });;
     }
@@ -219,21 +239,27 @@ export default class Edit extends Component {
             if (response.status === 404) {
                 // Error on API
                 console.log('404');
-                that.setMessage('Problemas ao tentar remover o formulário.');
-                that.setLoadingEdit(false);
+                if (this._isMounted) {
+                    that.setMessage('Problemas ao tentar remover o formulário.');
+                    that.setLoadingEdit(false);
+                }
                 //that.props.setMainContentComponent('Error', that.state);
             } else {
                 // API response ok
-                that.setMessage('Formulário removido com sucesso.');
-                that.setRemoved(true);
-                that.setLoadingEdit(false);
+                if (this._isMounted) {
+                    that.setMessage('Formulário removido com sucesso.');
+                    that.setRemoved(true);
+                    that.setLoadingEdit(false);
+                }
             }
         })
         .catch(() => {
             // request error
             console.log('error');
-            that.setMessage('Problemas ao tentar remover o formulário.');
-            that.setLoadingEdit(false);
+            if (this._isMounted) {
+                that.setMessage('Problemas ao tentar remover o formulário.');
+                that.setLoadingEdit(false);
+            }
             //that.props.setMainContentComponent('Error', that.state);
         });;
     }
@@ -283,11 +309,15 @@ export default class Edit extends Component {
                     <form className="edit__form" onSubmit={editSubmit}>
                         <input className="edit__input edit__input--first" id="edit__title" type="text" placeholder="" defaultValue={title} onChange={this.inputTitleOnChange} />
                         <input className="edit__input edit__input--half" id="edit__model" type="text" placeholder="" defaultValue={model} onChange={this.inputModelOnChange} />
-                        <input className="edit__input edit__input--half" id="edit__year" type="text" placeholder="" defaultValue={year} onChange={this.inputYearOnChange} />
-                        <input className="edit__input" id="edit__brand" type="text" placeholder="" defaultValue={brand} onChange={this.inputBrandOnChange} />
+                        <input className="edit__input edit__input--half" id="edit__year" type="number" placeholder="" defaultValue={year} onChange={this.inputYearOnChange} />
+                        <select className="edit__select" id="edit__brand" onChange={this.inputBrandOnChange} defaultValue={brand}>
+                            { this.state.brandsList.map((item) => {
+                                return <option className="edit__option" key={item.id} value={item.name}>{item.name}</option>;
+                            })}
+                        </select>
                         <input className="edit__input edit__input--half" id="edit__color" type="text" placeholder="" defaultValue={color} onChange={this.inputColorOnChange} />
-                        <input className="edit__input edit__input--half" id="edit__price" type="text" placeholder="" defaultValue={price} onChange={this.inputPriceOnChange} />
-                        <input className="edit__input edit__input--last edit__input--half" id="edit__km" type="text" placeholder="" defaultValue={km} onChange={this.inputKmOnChange} />
+                        <input className="edit__input edit__input--half" id="edit__price" type="number" placeholder="" defaultValue={price} onChange={this.inputPriceOnChange} />
+                        <input className="edit__input edit__input--last edit__input--half" id="edit__km" type="number" placeholder="" defaultValue={km} onChange={this.inputKmOnChange} />
                         
                         <div className="edit__button-container">
                             <button className="edit__button edit__button--first edit__button--transparent" disabled={this.state.loadingEdit} onClick={removeOnClick} type="submit">Remover</button>
